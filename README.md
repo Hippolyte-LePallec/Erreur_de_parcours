@@ -7,6 +7,8 @@ Application web de gestion de tâches avec API REST.
 - Keylian Turbe
 - Romain Siame
 
+Groupe n°7
+
 ## Prérequis
 
 - Node.js (v24.11.1 ou supérieur)
