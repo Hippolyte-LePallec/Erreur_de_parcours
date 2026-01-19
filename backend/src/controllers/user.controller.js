@@ -103,16 +103,48 @@ export const getUsers = async (_req, res) => {
 // ===================== Obtenir un user =====================
 export const getUserById = async (req, res) => {
   try {
-    const { id } = req.params;
-    const [users] = await db.query("SELECT * FROM users WHERE id = ?", [id]);
+    const [user] = await db.query("SELECT * FROM users WHERE id = ?", [
+      req.params.id,
+    ]);
 
-    if (users.length === 0) {
-      return res.status(404).json({ error: "User non trouvé" });
+    if (user.length === 0) {
+      return res.status(404).json({ error: "Utilisateur non trouvé" });
     }
 
-    res.json({ users: users[0] });
-  } catch (error) {
-    console.error("Erreur lors de la récupération de l'user:", error);
-    res.status(500).json({ error: "Erreur serveur" + error });
+    res.json(user[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Erreur serveur" });
+  }
+};
+
+// ===================== Réinitialiser le mot de passe =====================
+export const resetPassword = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ error: "Email et nouveau mot de passe requis" });
+    }
+
+    // Vérifier si l'utilisateur existe
+    const [users] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
+    if (users.length === 0) {
+      return res.status(404).json({ error: "Aucun compte trouvé avec cet email" });
+    }
+
+    // Hacher le nouveau mot de passe
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Mettre à jour le mot de passe
+    await db.query("UPDATE users SET password = ? WHERE email = ?", [
+      hashedPassword,
+      email,
+    ]);
+
+    res.json({ message: "Mot de passe réinitialisé avec succès" });
+  } catch (err) {
+    console.error("Erreur lors de la réinitialisation du mot de passe:", err);
+    res.status(500).json({ error: "Erreur lors de la réinitialisation du mot de passe" });
   }
 };

@@ -28,6 +28,11 @@ const router = createRouter({
       path: '/task',
       name: 'task',
       component: Task,
+    },
+    {
+      path: '/reset-password',
+      name: 'ResetPassword',
+      component: () => import('../views/Reset.vue')
     }
   ],
 })

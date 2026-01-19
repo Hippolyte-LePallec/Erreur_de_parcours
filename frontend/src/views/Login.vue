@@ -60,8 +60,8 @@
 								<div class="mt-3 text-center text-muted">
 									Pas de compte ? <RouterLink to="/register">Créer un compte</RouterLink>
 								</div>
-								<div class="mt-3 text-center text-muted cursor-pointer" @click="resetPassword">
-									Mot de passe oublié ?
+								<div class="mt-3 text-center text-muted">
+									Mot de passe oublié ? <RouterLink to="/reset-password">Réinitialiser</RouterLink>
 								</div>
 							</n-card>
 						</div>
@@ -118,28 +118,4 @@ async function handleLogin() {
 	}
 }
 
-/**
- * Fonction qui permet de reset le password
- */
-async function resetPassword() {
-	// Charge la liste des utilisateurs (démonstration)
-	error.value = ''
-	loading.value = true
-
-	try {
-
-		const res = await fetch('/api/users', {
-			method: 'GET',
-			headers: { 'Content-Type': 'application/json' }
-		})
-		passwords.value = await res.json()
-		console.log(passwords.value);
-
-
-	} catch (e) {
-		error.value = 'Erreur réseau ou serveur lors de la réinitialisation de mot de passe. ' + e.message
-	} finally {
-		loading.value = false
-	}
-}
 </script>
