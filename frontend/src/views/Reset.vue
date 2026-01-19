@@ -174,12 +174,6 @@ async function handleReset() {
 </script>
 
 <style scoped>
-.auth-page {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  background-color: #f8f9fa;
-}
 
 .mt-3 {
   margin-top: 1rem;
