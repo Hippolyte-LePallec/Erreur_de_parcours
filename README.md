@@ -35,6 +35,20 @@ npm install
 npm run db
 ```
 
+## Si un problème survient
+
+Executez les commandes suivantes:  
+
+```bash
+cd frontend
+npm install
+cd ../backend 
+npm install
+cd ..
+```
+
+Puis coller le contenu du fichier `backend\src\database\schema.sql` dans votre bdd.
+
 ## Démarrage
 
 ```bash
